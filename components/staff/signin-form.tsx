@@ -7,6 +7,30 @@ import { ChefHat } from "lucide-react";
 import { signIn } from "@/lib/auth-client";
 import { Button, Card, Input, Label, Spinner } from "@/components/ui";
 
+/**
+ * Turns Better Auth's error into something staff can act on. Showing the raw
+ * message made a server misconfiguration ("Invalid origin") look exactly like
+ * a wrong password, which is how that bug hid.
+ */
+function describeAuthError(error: {
+  code?: string;
+  status?: number;
+  message?: string;
+}): string {
+  if (error.status === 429) {
+    return "Too many attempts. Wait a minute, then try again.";
+  }
+  switch (error.code) {
+    case "INVALID_EMAIL_OR_PASSWORD":
+      return "That email and password didn't match an account.";
+    case "INVALID_ORIGIN":
+      return "The server didn't accept sign-ins from this address. Check that BETTER_AUTH_URL matches the address in your browser.";
+    case "BANNED_USER":
+      return "This account has been disabled. Ask an admin to restore it.";
+  }
+  return error.message || "Couldn't sign in. Check your connection and try again.";
+}
+
 export function SignInForm() {
   const router = useRouter();
   const params = useSearchParams();
@@ -35,9 +59,7 @@ export function SignInForm() {
 
     if (authError) {
       setBusy(false);
-      setError(
-        authError.message ?? "That email and password didn't match an account.",
-      );
+      setError(describeAuthError(authError));
       return;
     }
 
