@@ -30,9 +30,11 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files — every real one stays out; only the placeholder template ships
-.env
-.env.local
+# env files — every real one stays out; only the placeholder template ships.
+# The wildcard matters: listing .env and .env.local by name would let a
+# .env.production or .env.staging be committed by accident.
+.env*
+!.env.example
 
 # vercel
 .vercel
