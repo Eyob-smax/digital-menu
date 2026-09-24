@@ -48,7 +48,7 @@ export function SignInForm() {
   return (
     <Card className="p-6">
       <div className="mb-6 text-center">
-        <ChefHat className="mx-auto mb-3 h-9 w-9 text-accent" />
+        <ChefHat className="mx-auto mb-3 h-9 w-9 text-accent-text" />
         <h1 className="font-display text-xl font-semibold text-ink">
           Staff sign in
         </h1>

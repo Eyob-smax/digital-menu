@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowLeft, Heart } from "lucide-react";
 
 import { useMenu } from "@/components/menu-provider";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { ItemCard } from "@/components/customer/item-card";
 import { ItemSheet } from "@/components/customer/item-sheet";
 import { Button, EmptyState, Skeleton } from "@/components/ui";
@@ -42,6 +43,7 @@ export function FavoritesScreen() {
         <h1 className="font-display text-xl font-semibold text-ink">
           Your favourites
         </h1>
+        <ThemeToggle className="ml-auto" />
       </header>
 
       <main className="px-4">

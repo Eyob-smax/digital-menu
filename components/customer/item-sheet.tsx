@@ -215,7 +215,7 @@ export function ItemSheet({
                       className={cn(
                         "min-h-[44px] rounded-full border px-4 text-sm transition-colors",
                         active
-                          ? "border-accent bg-accent/12 text-accent"
+                          ? "border-accent bg-accent/12 text-accent-text"
                           : "border-line bg-surface-2 text-ink-muted",
                       )}
                     >
@@ -277,7 +277,7 @@ export function ItemSheet({
             </div>
           ) : (
             <div className="flex items-center justify-between gap-3">
-              <span className="font-display text-xl font-semibold text-accent">
+              <span className="font-display text-xl font-semibold text-accent-text">
                 {formatMoney(unitPrice, currency)}
               </span>
               <p className="text-right text-sm text-ink-muted">

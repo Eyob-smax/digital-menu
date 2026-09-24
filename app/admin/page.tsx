@@ -75,12 +75,12 @@ export default async function AdminDashboard() {
         <section>
           <div className="mb-2.5 flex items-center justify-between">
             <h2 className="font-display flex items-center gap-2 text-lg font-semibold text-ink">
-              <TrendingUp className="h-4.5 w-4.5 text-accent" />
+              <TrendingUp className="h-4.5 w-4.5 text-accent-text" />
               Most ordered
             </h2>
             <Link
               href="/admin/analytics"
-              className="text-sm text-accent hover:underline"
+              className="text-sm text-accent-text hover:underline"
             >
               See all
             </Link>
@@ -120,7 +120,7 @@ export default async function AdminDashboard() {
               <Receipt className="h-4.5 w-4.5 text-ink-muted" />
               Latest orders
             </h2>
-            <Link href="/staff" className="text-sm text-accent hover:underline">
+            <Link href="/staff" className="text-sm text-accent-text hover:underline">
               Order screen
             </Link>
           </div>
@@ -136,7 +136,7 @@ export default async function AdminDashboard() {
                   key={order.id}
                   className="flex items-center gap-3 px-3.5 py-2.5"
                 >
-                  <span className="font-display shrink-0 font-semibold text-accent">
+                  <span className="font-display shrink-0 font-semibold text-accent-text">
                     {order.publicCode}
                   </span>
                   <div className="min-w-0 flex-1">
@@ -176,7 +176,7 @@ function Stat({
       <p className="text-xs tracking-wide text-ink-muted uppercase">{label}</p>
       <p
         className={`font-display mt-1 text-2xl font-semibold tabular-nums ${
-          highlight ? "text-accent" : "text-ink"
+          highlight ? "text-accent-text" : "text-ink"
         }`}
       >
         {value}

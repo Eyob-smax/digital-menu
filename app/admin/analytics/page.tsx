@@ -97,7 +97,7 @@ export default async function AnalyticsPage({
               <p className="text-xs tracking-wide text-ink-muted uppercase">
                 Best seller
               </p>
-              <p className="font-display mt-1 truncate text-lg font-semibold text-accent">
+              <p className="font-display mt-1 truncate text-lg font-semibold text-accent-text">
                 {rows[0]?.name ?? "—"}
               </p>
             </Card>

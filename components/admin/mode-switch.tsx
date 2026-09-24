@@ -155,11 +155,11 @@ function ModeCard({
       )}
     >
       <div className="flex items-center gap-2">
-        <span className={active ? "text-accent" : "text-ink-muted"}>{icon}</span>
+        <span className={active ? "text-accent-text" : "text-ink-muted"}>{icon}</span>
         <span
           className={cn(
             "font-display font-semibold",
-            active ? "text-accent" : "text-ink",
+            active ? "text-accent-text" : "text-ink",
           )}
         >
           {title}

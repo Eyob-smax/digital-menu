@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 
 import { Badge, Button, Card, EmptyState, Spinner } from "@/components/ui";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { formatMoney } from "@/lib/money";
 import type { OrderStatus, OrderView } from "@/lib/types";
 import { cn, elapsed } from "@/lib/utils";
@@ -126,7 +127,7 @@ export function StaffScreen({
       <header className="sticky top-0 z-30 border-b border-line bg-surface-0/95 backdrop-blur-lg">
         <div className="mx-auto w-full flex max-w-7xl items-center justify-between gap-3 px-4 py-3">
           <div className="flex items-center gap-2.5">
-            <ChefHat className="h-6 w-6 text-accent" />
+            <ChefHat className="h-6 w-6 text-accent-text" />
             <h1 className="font-display text-xl font-semibold text-ink">
               Orders
             </h1>
@@ -136,6 +137,7 @@ export function StaffScreen({
           </div>
 
           <div className="flex items-center gap-2">
+            <ThemeToggle />
             <button
               type="button"
               onClick={() => {
@@ -150,7 +152,7 @@ export function StaffScreen({
               className="flex h-10 w-10 items-center justify-center rounded-full text-ink-muted active:bg-surface-2"
             >
               {soundOn ? (
-                <Bell className="h-5 w-5 text-accent" />
+                <Bell className="h-5 w-5 text-accent-text" />
               ) : (
                 <BellOff className="h-5 w-5" />
               )}
@@ -261,7 +263,7 @@ function OrderTicket({
     >
       <div className="flex items-center justify-between gap-2 border-b border-line px-3 py-2">
         <div className="flex items-center gap-2">
-          <span className="font-display text-lg font-semibold text-accent">
+          <span className="font-display text-lg font-semibold text-accent-text">
             {order.publicCode}
           </span>
           {order.tableLabel && (

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowLeft, Clock, History, Trophy } from "lucide-react";
 
 import { useMenu } from "@/components/menu-provider";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Badge, Button, Card, EmptyState, Skeleton } from "@/components/ui";
 import { formatMoney } from "@/lib/money";
 import type { OrderStatus } from "@/lib/types";
@@ -54,6 +55,7 @@ export function HistoryScreen() {
         <h1 className="font-display text-xl font-semibold text-ink">
           Your orders
         </h1>
+        <ThemeToggle className="ml-auto" />
       </header>
 
       <main className="space-y-6 px-4">
@@ -84,7 +86,7 @@ export function HistoryScreen() {
         {topStats.length > 0 && (
           <section className="pt-2">
             <div className="mb-2.5 flex items-center gap-2">
-              <Trophy className="h-4 w-4 text-accent" />
+              <Trophy className="h-4 w-4 text-accent-text" />
               <h2 className="font-display text-[1.1rem] font-semibold text-ink">
                 Your usuals
               </h2>
@@ -205,7 +207,7 @@ export function HistoryScreen() {
 
                     <div className="flex items-center justify-between px-3.5 py-2.5">
                       <span className="text-sm text-ink-muted">Total</span>
-                      <span className="font-semibold tabular-nums text-accent">
+                      <span className="font-semibold tabular-nums text-accent-text">
                         {formatMoney(order.total, currency)}
                       </span>
                     </div>

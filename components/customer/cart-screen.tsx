@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 
 import { useMenu, type SubmitResult } from "@/components/menu-provider";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Button, Card, EmptyState, Spinner, Textarea } from "@/components/ui";
 import { formatMoney, multiplyMoney } from "@/lib/money";
 
@@ -98,7 +99,7 @@ export function CartScreen() {
           ) : (
             <>
               Your order is with the kitchen. Quote{" "}
-              <span className="font-semibold text-accent">
+              <span className="font-semibold text-accent-text">
                 {result.status === "sent" ? result.publicCode : ""}
               </span>{" "}
               if you need to ask about it.
@@ -176,6 +177,7 @@ export function CartScreen() {
         <h1 className="font-display text-xl font-semibold text-ink">
           Your order
         </h1>
+        <ThemeToggle className="ml-auto" />
       </header>
 
       <main className="space-y-4 px-4">
@@ -201,7 +203,7 @@ export function CartScreen() {
                   </p>
                 )}
 
-                <p className="mt-1 text-sm tabular-nums text-accent">
+                <p className="mt-1 text-sm tabular-nums text-accent-text">
                   {formatMoney(multiplyMoney(line.unitPrice, line.qty), currency)}
                 </p>
 
@@ -272,7 +274,7 @@ export function CartScreen() {
           )}
           <div className="flex items-center justify-between px-3.5 py-3">
             <span className="font-medium text-ink">Total</span>
-            <span className="font-display text-lg font-semibold tabular-nums text-accent">
+            <span className="font-display text-lg font-semibold tabular-nums text-accent-text">
               {formatMoney(cartTotals.total, currency)}
             </span>
           </div>

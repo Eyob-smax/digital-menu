@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 
 import { SignOutButton } from "@/components/admin/sign-out-button";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { requireAdmin } from "@/lib/guard";
 
 const NAV = [
@@ -32,7 +33,7 @@ export default async function AdminLayout({
       <header className="sticky top-0 z-30 border-b border-line bg-surface-0/95 backdrop-blur-lg">
         <div className="mx-auto w-full flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
           <div className="flex min-w-0 items-center gap-2">
-            <ChefHat className="h-5 w-5 shrink-0 text-accent" />
+            <ChefHat className="h-5 w-5 shrink-0 text-accent-text" />
             <span className="font-display truncate font-semibold text-ink">
               Admin
             </span>
@@ -48,6 +49,7 @@ export default async function AdminLayout({
             <span className="hidden text-sm text-ink-faint sm:inline">
               {session.user.email}
             </span>
+            <ThemeToggle />
             <SignOutButton />
           </div>
         </div>
