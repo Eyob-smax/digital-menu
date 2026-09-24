@@ -10,6 +10,28 @@ import type { MenuItem } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 /**
+ * Placeholder tints, one per brand hue. Spelled out in full so Tailwind
+ * generates them; a template string would be invisible to its scanner.
+ */
+const PLACEHOLDER_TONES = [
+  "bg-hue-1/20",
+  "bg-hue-2/20",
+  "bg-hue-3/20",
+  "bg-hue-4/20",
+  "bg-hue-5/20",
+  "bg-hue-6/20",
+] as const;
+
+/** Same dish, same colour, every render — derived from the name. */
+function placeholderTone(name: string): string {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = (hash * 31 + name.charCodeAt(i)) | 0;
+  }
+  return PLACEHOLDER_TONES[Math.abs(hash) % PLACEHOLDER_TONES.length];
+}
+
+/**
  * One dish on the menu.
  *
  * Layout choice: image on the right at a fixed 96px, text on the left. That
@@ -35,13 +57,16 @@ export function ItemCard({
   const isFavorite = favorites.has(item.id);
 
   const hasOptions = item.options.length > 0;
+  const featured = item.isFeatured && item.isAvailable;
 
   return (
     <div
       className={cn(
-        "group relative flex gap-3.5 rounded-[var(--radius-card)] border border-line",
-        "bg-surface-1 p-3 transition-colors duration-150",
-        "active:bg-surface-2",
+        "group shadow-card relative flex gap-3.5 rounded-[var(--radius-card)] p-3",
+        "transition-[transform,background-color] duration-150 active:scale-[0.99]",
+        featured
+          ? "ring-brand"
+          : "border border-line bg-surface-1 active:bg-surface-2",
         !item.isAvailable && "opacity-55",
       )}
     >
@@ -77,7 +102,7 @@ export function ItemCard({
         )}
 
         <div className="mt-2 flex flex-wrap items-center gap-1.5">
-          <span className="text-[0.95rem] font-semibold text-accent">
+          <span className="text-base font-bold text-accent-text">
             {formatMoney(item.price, currency)}
           </span>
 
@@ -119,8 +144,13 @@ export function ItemCard({
               className="pointer-events-none h-24 w-24 rounded-xl object-cover"
             />
           ) : (
-            <div className="pointer-events-none flex h-24 w-24 items-center justify-center rounded-xl bg-surface-2">
-              <span className="font-display text-2xl text-ink-faint">
+            <div
+              className={cn(
+                "pointer-events-none flex h-24 w-24 items-center justify-center rounded-xl",
+                placeholderTone(item.name),
+              )}
+            >
+              <span className="font-display text-3xl font-bold text-ink">
                 {item.name.slice(0, 1)}
               </span>
             </div>
@@ -167,9 +197,9 @@ export function ItemCard({
             }}
             aria-label={`Add ${item.name} to order`}
             className={cn(
-              "mt-2 flex h-10 w-10 items-center justify-center rounded-full",
-              "bg-accent text-accent-ink transition-transform duration-150",
-              "active:scale-90",
+              "shadow-glow mt-2 flex h-11 w-11 items-center justify-center rounded-full",
+              "bg-accent text-accent-ink transition-[transform,background-color] duration-150",
+              "hover:bg-accent-strong active:scale-90",
             )}
           >
             <Plus className="h-5 w-5" strokeWidth={2.5} />

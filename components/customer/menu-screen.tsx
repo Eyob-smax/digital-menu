@@ -16,10 +16,26 @@ import {
 import { useMenu } from "@/components/menu-provider";
 import { ItemCard } from "@/components/customer/item-card";
 import { ItemSheet } from "@/components/customer/item-sheet";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Button, EmptyState, Skeleton } from "@/components/ui";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/lib/types";
 import { cn, timeAgo } from "@/lib/utils";
+
+/**
+ * One colour per category, cycled. Written out in full rather than built
+ * from a template string, because Tailwind only generates classes it can see
+ * literally in the source. Idle chips are a 16% tint with dark ink; the
+ * active chip is the solid hue with accent-ink — both measured to pass AA.
+ */
+const CHIP_STYLES = [
+  { idle: "bg-hue-1/16 text-ink", active: "bg-hue-1 text-accent-ink" },
+  { idle: "bg-hue-2/16 text-ink", active: "bg-hue-2 text-accent-ink" },
+  { idle: "bg-hue-3/16 text-ink", active: "bg-hue-3 text-accent-ink" },
+  { idle: "bg-hue-4/16 text-ink", active: "bg-hue-4 text-accent-ink" },
+  { idle: "bg-hue-5/16 text-ink", active: "bg-hue-5 text-accent-ink" },
+  { idle: "bg-hue-6/16 text-ink", active: "bg-hue-6 text-accent-ink" },
+] as const;
 
 /**
  * The main customer screen.
@@ -44,7 +60,6 @@ export function MenuScreen() {
   } = useMenu();
 
   const [query, setQuery] = React.useState("");
-  const [searching, setSearching] = React.useState(false);
   const [activeCategory, setActiveCategory] = React.useState<string | null>(null);
   const [openItem, setOpenItem] = React.useState<MenuItem | null>(null);
 
@@ -155,91 +170,121 @@ export function MenuScreen() {
 
   return (
     <div className="mx-auto w-full min-h-dvh max-w-lg pb-28">
-      {/* ------------------------------------------------------------ header */}
-      <header className="sticky top-0 z-30 bg-surface-0/92 backdrop-blur-lg">
-        <div className="px-4 pt-[max(0.85rem,env(safe-area-inset-top))] pb-2.5">
-          <div className="flex items-start justify-between gap-3">
-            <div className="min-w-0">
-              <h1 className="font-display truncate text-[1.6rem] leading-tight font-semibold text-ink">
-                {settings?.restaurantName}
-              </h1>
-              <p className="mt-0.5 truncate text-[0.82rem] text-ink-muted">
-                {tableSlug ? (
-                  <>Table&nbsp;·&nbsp;{tableSlug}</>
-                ) : (
-                  settings?.tagline || "Today's menu"
-                )}
-              </p>
-            </div>
+      {/* -------------------------------------------------------------- hero */}
+      {/* Scrolls away, so the bright brand moment doesn't cost screen space
+          once someone is browsing. Text is accent-ink, measured against both
+          ends of the gradient. */}
+      <section className="bg-brand relative overflow-hidden rounded-b-[2rem] px-4 pt-[max(0.85rem,env(safe-area-inset-top))] pb-6 text-accent-ink">
+        {/* Soft light blobs for depth; purely decorative. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -top-16 -right-10 h-48 w-48 rounded-full bg-white/25 blur-2xl"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -bottom-20 -left-12 h-44 w-44 rounded-full bg-white/15 blur-2xl"
+        />
 
-            <div className="flex shrink-0 items-center gap-1">
-              <button
-                type="button"
-                onClick={() => setSearching((s) => !s)}
-                aria-label={searching ? "Close search" : "Search the menu"}
-                className="flex h-10 w-10 items-center justify-center rounded-full text-ink-muted active:bg-surface-2"
-              >
-                {searching ? (
-                  <X className="h-5 w-5" />
-                ) : (
-                  <Search className="h-5 w-5" />
-                )}
-              </button>
+        <div className="relative flex items-center justify-between gap-2">
+          <span className="inline-flex min-h-[30px] items-center rounded-full bg-accent-ink/10 px-3 text-xs font-semibold tracking-wide uppercase">
+            {tableSlug ? (
+              <>Table · {tableSlug}</>
+            ) : canOrder ? (
+              <>Order from your table</>
+            ) : (
+              <>Today&rsquo;s menu</>
+            )}
+          </span>
 
-              <Link
-                href="/favorites"
-                aria-label="Favourites"
-                className="flex h-10 w-10 items-center justify-center rounded-full text-ink-muted active:bg-surface-2"
-              >
-                <Heart className="h-5 w-5" />
-              </Link>
-
-              <Link
-                href="/history"
-                aria-label="Your order history"
-                className="flex h-10 w-10 items-center justify-center rounded-full text-ink-muted active:bg-surface-2"
-              >
-                <History className="h-5 w-5" />
-              </Link>
-            </div>
+          <div className="flex shrink-0 items-center gap-1">
+            <ThemeToggle className="text-accent-ink hover:bg-accent-ink/10 hover:text-accent-ink" />
+            <Link
+              href="/favorites"
+              aria-label="Favourites"
+              className="flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-accent-ink/10"
+            >
+              <Heart className="h-5 w-5" />
+            </Link>
+            <Link
+              href="/history"
+              aria-label="Your order history"
+              className="flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-accent-ink/10"
+            >
+              <History className="h-5 w-5" />
+            </Link>
           </div>
-
-          {searching && (
-            <div className="animate-rise relative mt-2.5">
-              <Search className="absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-ink-faint" />
-              <input
-                autoFocus
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="Search dishes, ingredients…"
-                aria-label="Search the menu"
-                className="min-h-[44px] w-full rounded-full border border-line bg-surface-2 pr-4 pl-10 text-ink placeholder:text-ink-faint focus:border-accent focus:outline-none"
-              />
-            </div>
-          )}
         </div>
 
-        {/* Category rail */}
+        <h1 className="font-display relative mt-5 text-[2.1rem] leading-[1.05] font-bold tracking-tight">
+          {settings?.restaurantName}
+        </h1>
+        {settings?.tagline && (
+          <p className="relative mt-1.5 text-[0.95rem] font-medium opacity-85">
+            {settings.tagline}
+          </p>
+        )}
+
+        {/* Mode notice: sets expectations before anyone tries to order. */}
+        {!canOrder && (
+          <p className="relative mt-4 flex items-start gap-2 rounded-2xl bg-accent-ink/10 px-3.5 py-2.5 text-[0.84rem] leading-snug font-medium">
+            <UtensilsCrossed className="mt-0.5 h-4 w-4 shrink-0" />
+            Browse and save what you like, then tell your server what you&rsquo;d
+            like to order.
+          </p>
+        )}
+      </section>
+
+      {/* -------------------------------------------------------- sticky bar */}
+      <header className="sticky top-0 z-30 bg-surface-0/90 backdrop-blur-xl">
+        <div className="px-4 pt-3 pb-2">
+          <div className="relative">
+            <Search className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-ink-faint" />
+            <input
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Search dishes, ingredients…"
+              aria-label="Search the menu"
+              className="min-h-[44px] w-full rounded-full border border-line bg-surface-1 pr-10 pl-10 text-[0.95rem] text-ink placeholder:text-ink-faint focus:border-accent focus:outline-none"
+            />
+            {query && (
+              <button
+                type="button"
+                onClick={() => setQuery("")}
+                aria-label="Clear search"
+                className="absolute top-1/2 right-1.5 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full text-ink-muted hover:bg-surface-2"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Category rail — each category keeps its own colour, so the rail
+            doubles as a legend for the section headings below. */}
         {!query && sections.length > 1 && (
           <nav
             aria-label="Menu categories"
-            className="no-scrollbar flex gap-2 overflow-x-auto px-4 pb-2.5"
+            className="no-scrollbar flex gap-2 overflow-x-auto px-4 pb-3"
           >
-            {sections.map(({ category }) => (
-              <button
-                key={category.id}
-                type="button"
-                onClick={() => scrollToCategory(category.id)}
-                className={cn(
-                  "min-h-[36px] shrink-0 rounded-full border px-3.5 text-sm whitespace-nowrap transition-colors",
-                  activeCategory === category.id
-                    ? "border-accent bg-accent text-accent-ink"
-                    : "border-line bg-surface-1 text-ink-muted",
-                )}
-              >
-                {category.name}
-              </button>
-            ))}
+            {sections.map(({ category }, index) => {
+              const chip = CHIP_STYLES[index % CHIP_STYLES.length];
+              const active = activeCategory === category.id;
+              return (
+                <button
+                  key={category.id}
+                  type="button"
+                  onClick={() => scrollToCategory(category.id)}
+                  aria-current={active ? "true" : undefined}
+                  className={cn(
+                    "min-h-[38px] shrink-0 rounded-full px-4 text-sm font-semibold whitespace-nowrap",
+                    "transition-[background-color,color,transform] duration-150 active:scale-95",
+                    active ? chip.active : chip.idle,
+                  )}
+                >
+                  {category.name}
+                </button>
+              );
+            })}
           </nav>
         )}
 
@@ -264,7 +309,7 @@ export function MenuScreen() {
             <button
               type="button"
               onClick={() => void refresh()}
-              className="shrink-0 text-accent"
+              className="shrink-0 text-accent-text"
               aria-label="Retry sync"
             >
               <RefreshCw className={cn("h-3.5 w-3.5", syncing && "animate-spin")} />
@@ -275,15 +320,6 @@ export function MenuScreen() {
 
       {/* ------------------------------------------------------------- body */}
       <main className="px-4 pt-3">
-        {/* Mode notice: sets expectations before anyone tries to order. */}
-        {!canOrder && (
-          <p className="mb-4 rounded-xl border border-line bg-surface-1 px-3.5 py-2.5 text-[0.82rem] leading-snug text-ink-muted">
-            <UtensilsCrossed className="mr-1.5 inline h-3.5 w-3.5" />
-            Browse the menu and save what you like — then tell your server what
-            you&rsquo;d like to order.
-          </p>
-        )}
-
         {sections.length === 0 ? (
           <EmptyState
             icon={<Search className="h-9 w-9" />}
