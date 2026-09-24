@@ -451,7 +451,7 @@ function Toggle({
       className={cn(
         "min-h-[38px] rounded-full border px-3.5 text-sm transition-colors",
         checked
-          ? "border-accent bg-accent/15 text-accent"
+          ? "border-accent bg-accent/12 text-accent"
           : "border-line bg-surface-2 text-ink-muted",
       )}
     >

@@ -215,7 +215,7 @@ export function ItemSheet({
                       className={cn(
                         "min-h-[44px] rounded-full border px-4 text-sm transition-colors",
                         active
-                          ? "border-accent bg-accent/15 text-accent"
+                          ? "border-accent bg-accent/12 text-accent"
                           : "border-line bg-surface-2 text-ink-muted",
                       )}
                     >

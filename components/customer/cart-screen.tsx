@@ -69,7 +69,7 @@ export function CartScreen() {
     const queued = result.status === "queued";
 
     return (
-      <div className="mx-auto flex min-h-dvh max-w-lg flex-col items-center justify-center px-6 text-center">
+      <div className="mx-auto w-full flex min-h-dvh max-w-lg flex-col items-center justify-center px-6 text-center">
         <div
           className={
             queued
@@ -126,7 +126,7 @@ export function CartScreen() {
 
   if (!canOrder) {
     return (
-      <div className="mx-auto min-h-dvh max-w-lg px-4 pt-6">
+      <div className="mx-auto w-full min-h-dvh max-w-lg px-4 pt-6">
         <EmptyState
           icon={<ShoppingBag className="h-10 w-10" />}
           title="Ordering is switched off"
@@ -145,7 +145,7 @@ export function CartScreen() {
 
   if (!cart.length) {
     return (
-      <div className="mx-auto min-h-dvh max-w-lg px-4 pt-6">
+      <div className="mx-auto w-full min-h-dvh max-w-lg px-4 pt-6">
         <EmptyState
           icon={<ShoppingBag className="h-10 w-10" />}
           title="Your order is empty"
@@ -163,7 +163,7 @@ export function CartScreen() {
   /* --------------------------------------------------------------- cart */
 
   return (
-    <div className="mx-auto min-h-dvh max-w-lg pb-44">
+    <div className="mx-auto w-full min-h-dvh max-w-lg pb-44">
       <header className="sticky top-0 z-30 flex items-center gap-2 bg-surface-0/92 px-4 pt-[max(0.85rem,env(safe-area-inset-top))] pb-3 backdrop-blur-lg">
         <button
           type="button"
@@ -289,7 +289,7 @@ export function CartScreen() {
       </main>
 
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-surface-0/95 px-4 pt-3 pb-[max(0.85rem,env(safe-area-inset-bottom))] backdrop-blur-lg">
-        <div className="mx-auto max-w-lg">
+        <div className="mx-auto w-full max-w-lg">
           {!online && (
             <p className="mb-2 flex items-center gap-1.5 text-xs text-ink-muted">
               <CloudOff className="h-3.5 w-3.5" />

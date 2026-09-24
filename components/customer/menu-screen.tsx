@@ -125,7 +125,7 @@ export function MenuScreen() {
 
   if (!ready && !snapshot) {
     return (
-      <div className="mx-auto max-w-lg px-4 pt-6">
+      <div className="mx-auto w-full max-w-lg px-4 pt-6">
         <Skeleton className="h-8 w-44" />
         <Skeleton className="mt-2 h-4 w-32" />
         <div className="mt-6 flex gap-2">
@@ -154,7 +154,7 @@ export function MenuScreen() {
   }
 
   return (
-    <div className="mx-auto min-h-dvh max-w-lg pb-28">
+    <div className="mx-auto w-full min-h-dvh max-w-lg pb-28">
       {/* ------------------------------------------------------------ header */}
       <header className="sticky top-0 z-30 bg-surface-0/92 backdrop-blur-lg">
         <div className="px-4 pt-[max(0.85rem,env(safe-area-inset-top))] pb-2.5">
@@ -342,8 +342,8 @@ export function MenuScreen() {
       {/* -------------------------------------------------------- cart bar */}
       {canOrder && cartCount > 0 && (
         <div className="fixed inset-x-0 bottom-0 z-40 px-4 pb-[max(0.85rem,env(safe-area-inset-bottom))]">
-          <Link href="/cart" className="mx-auto block max-w-lg">
-            <div className="animate-rise flex items-center justify-between gap-3 rounded-full bg-accent px-5 py-3.5 text-accent-ink shadow-lg shadow-black/25">
+          <Link href="/cart" className="mx-auto w-full block max-w-lg">
+            <div className="animate-rise flex items-center justify-between gap-3 rounded-full bg-accent px-5 py-3.5 text-accent-ink shadow-lg shadow-black/15">
               <span className="flex items-center gap-2 font-medium">
                 <ShoppingBag className="h-5 w-5" />
                 {cartCount} item{cartCount > 1 ? "s" : ""}

@@ -30,7 +30,7 @@ export function FavoritesScreen() {
   );
 
   return (
-    <div className="mx-auto min-h-dvh max-w-lg pb-12">
+    <div className="mx-auto w-full min-h-dvh max-w-lg pb-12">
       <header className="sticky top-0 z-30 flex items-center gap-2 bg-surface-0/92 px-4 pt-[max(0.85rem,env(safe-area-inset-top))] pb-3 backdrop-blur-lg">
         <Link
           href="/"

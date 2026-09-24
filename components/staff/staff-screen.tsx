@@ -124,7 +124,7 @@ export function StaffScreen({
   return (
     <div className="min-h-dvh bg-surface-0">
       <header className="sticky top-0 z-30 border-b border-line bg-surface-0/95 backdrop-blur-lg">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3">
+        <div className="mx-auto w-full flex max-w-7xl items-center justify-between gap-3 px-4 py-3">
           <div className="flex items-center gap-2.5">
             <ChefHat className="h-6 w-6 text-accent" />
             <h1 className="font-display text-xl font-semibold text-ink">
@@ -170,7 +170,7 @@ export function StaffScreen({
         {!connected && (
           <div
             role="status"
-            className="flex items-center gap-2 bg-danger/15 px-4 py-2 text-xs text-danger"
+            className="flex items-center gap-2 bg-danger/12 px-4 py-2 text-xs text-danger"
           >
             <CloudOff className="h-3.5 w-3.5" />
             Lost connection to the server — retrying every few seconds.
@@ -178,7 +178,7 @@ export function StaffScreen({
         )}
       </header>
 
-      <main className="mx-auto max-w-7xl px-4 py-4">
+      <main className="mx-auto w-full max-w-7xl px-4 py-4">
         {orders.length === 0 ? (
           <EmptyState
             icon={<ChefHat className="h-10 w-10" />}

@@ -4,7 +4,7 @@ import { CloudOff } from "lucide-react";
 /** Last-resort page the service worker serves when nothing is cached. */
 export default function OfflinePage() {
   return (
-    <main className="mx-auto flex min-h-dvh max-w-lg flex-col items-center justify-center px-6 text-center">
+    <main className="mx-auto w-full flex min-h-dvh max-w-lg flex-col items-center justify-center px-6 text-center">
       <CloudOff className="mb-4 h-12 w-12 text-ink-faint" />
       <h1 className="font-display text-2xl font-semibold text-ink">
         You&rsquo;re offline

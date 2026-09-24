@@ -75,11 +75,11 @@ export function Badge({
       className={cn(
         "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium",
         tone === "neutral" && "bg-surface-2 text-ink-muted",
-        tone === "accent" && "bg-accent/15 text-accent",
-        tone === "success" && "bg-success/15 text-success",
-        tone === "warning" && "bg-warning/15 text-warning",
-        tone === "danger" && "bg-danger/15 text-danger",
-        tone === "info" && "bg-info/15 text-info",
+        tone === "accent" && "bg-accent/12 text-accent",
+        tone === "success" && "bg-success/12 text-success",
+        tone === "warning" && "bg-warning/12 text-warning",
+        tone === "danger" && "bg-danger/12 text-danger",
+        tone === "info" && "bg-info/12 text-info",
         className,
       )}
       {...props}

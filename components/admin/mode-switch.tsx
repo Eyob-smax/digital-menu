@@ -103,8 +103,8 @@ export function ModeSwitch({
             className={cn(
               "flex min-h-[44px] shrink-0 items-center gap-1.5 rounded-full px-4 text-sm font-medium transition-colors",
               optimisticAccepting
-                ? "bg-warning/15 text-warning"
-                : "bg-success/15 text-success",
+                ? "bg-warning/12 text-warning"
+                : "bg-success/12 text-success",
             )}
           >
             {optimisticAccepting ? (

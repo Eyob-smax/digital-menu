@@ -33,7 +33,7 @@ export function TableBinder({ slug, label }: { slug: string; label: string }) {
   }, [slug, router]);
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-lg flex-col items-center justify-center px-6 text-center">
+    <main className="mx-auto w-full flex min-h-dvh max-w-lg flex-col items-center justify-center px-6 text-center">
       <div className="animate-rise">
         <QrCode className="mx-auto mb-4 h-12 w-12 text-accent" />
         <h1 className="font-display text-2xl font-semibold text-ink">{label}</h1>

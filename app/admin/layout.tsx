@@ -19,11 +19,7 @@ const NAV = [
   { href: "/admin/settings", label: "Settings", icon: Settings },
 ];
 
-/**
- * Admin shell. Light theme by default — these screens are used under bright
- * kitchen and office lighting, where the customer app's dark theme is harder
- * to read.
- */
+/** Admin shell. */
 export default async function AdminLayout({
   children,
 }: {
@@ -32,9 +28,9 @@ export default async function AdminLayout({
   const session = await requireAdmin();
 
   return (
-    <div data-theme="light" className="min-h-dvh bg-surface-0">
+    <div className="min-h-dvh bg-surface-0">
       <header className="sticky top-0 z-30 border-b border-line bg-surface-0/95 backdrop-blur-lg">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
+        <div className="mx-auto w-full flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
           <div className="flex min-w-0 items-center gap-2">
             <ChefHat className="h-5 w-5 shrink-0 text-accent" />
             <span className="font-display truncate font-semibold text-ink">
@@ -56,7 +52,7 @@ export default async function AdminLayout({
           </div>
         </div>
 
-        <nav className="no-scrollbar mx-auto flex max-w-6xl gap-1 overflow-x-auto px-3 pb-2">
+        <nav className="no-scrollbar mx-auto w-full flex max-w-6xl gap-1 overflow-x-auto px-3 pb-2">
           {NAV.map((entry) => (
             <Link
               key={entry.href}
@@ -70,7 +66,7 @@ export default async function AdminLayout({
         </nav>
       </header>
 
-      <main className="mx-auto max-w-6xl px-4 py-5">{children}</main>
+      <main className="mx-auto w-full max-w-6xl px-4 py-5">{children}</main>
     </div>
   );
 }

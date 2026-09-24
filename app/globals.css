@@ -1,38 +1,46 @@
 @import "tailwindcss";
 
 /**
- * Design language: warm, dark-first, calm.
+ * Design language: warm, light, calm.
  *
- * A menu is read in low restaurant light, one-handed, by someone who is
- * hungry and slightly distracted. So: high contrast, large type, generous
- * touch targets, and no motion that draws the eye away from the food.
+ * A menu is read one-handed by someone who is hungry and slightly
+ * distracted — often on a phone at minimum brightness in daylight. So:
+ * high contrast, large type, generous touch targets, and no motion that
+ * draws the eye away from the food.
+ *
+ * Light is the default everywhere. The warm off-whites keep food
+ * photography looking appetising where a stark pure white would make it
+ * look clinical.
  */
 
 @theme {
-  /* Surfaces — warm charcoals rather than pure black, which reads as cheap
-     on OLED phones and crushes food photography. */
-  --color-surface-0: oklch(0.16 0.012 60);
-  --color-surface-1: oklch(0.21 0.014 60);
-  --color-surface-2: oklch(0.26 0.016 60);
-  --color-surface-3: oklch(0.32 0.018 60);
+  /* Surfaces — warm off-whites, never pure #fff. */
+  --color-surface-0: oklch(0.99 0.004 85);
+  --color-surface-1: oklch(0.97 0.006 85);
+  --color-surface-2: oklch(0.94 0.008 85);
+  --color-surface-3: oklch(0.89 0.01 85);
 
-  /* Text */
-  --color-ink: oklch(0.97 0.006 80);
-  --color-ink-muted: oklch(0.76 0.014 70);
-  --color-ink-faint: oklch(0.6 0.014 70);
+  /* Text — all four pass WCAG AA on surface-0. */
+  --color-ink: oklch(0.22 0.014 60);
+  --color-ink-muted: oklch(0.45 0.016 60);
+  --color-ink-faint: oklch(0.52 0.014 60);
 
-  /* Accent: warm amber, the colour of a kitchen pass light. */
-  --color-accent: oklch(0.78 0.16 62);
-  --color-accent-strong: oklch(0.72 0.18 55);
-  --color-accent-ink: oklch(0.2 0.03 60);
+  /* Accent: warm amber, the colour of a kitchen pass light.
+     L=0.50 is measured, not eyeballed. The accent carries prices — small
+     text needing 4.5:1 — backs white-on-accent buttons, AND tints its own
+     badge background. That last case is the binding constraint: a colour
+     on a tint of itself. The dark theme's L=0.78 lands near 2:1 here. */
+  --color-accent: oklch(0.5 0.17 52);
+  --color-accent-strong: oklch(0.44 0.18 48);
+  --color-accent-ink: oklch(0.99 0.01 80);
 
-  /* Status */
-  --color-success: oklch(0.75 0.15 150);
-  --color-warning: oklch(0.82 0.15 85);
-  --color-danger: oklch(0.65 0.19 25);
-  --color-info: oklch(0.72 0.12 240);
+  /* Status colours, darkened to the same rule so every badge clears AA. */
+  --color-success: oklch(0.48 0.13 150);
+  --color-warning: oklch(0.5 0.12 70);
+  --color-danger: oklch(0.5 0.19 25);
+  --color-info: oklch(0.5 0.13 250);
 
-  --color-line: oklch(0.32 0.014 60);
+  --color-line: oklch(0.87 0.01 70);
 
   --radius-card: 1.125rem;
   --radius-pill: 999px;
@@ -44,24 +52,31 @@
 }
 
 /**
- * Light theme. The customer app is dark by default, but the admin and staff
- * screens are used under bright kitchen lighting where dark-on-light wins.
+ * Dark theme, opt-in via data-theme="dark". Kept for a dimly lit dining
+ * room, but nothing selects it by default.
  */
-[data-theme="light"] {
-  --color-surface-0: oklch(0.99 0.004 85);
-  --color-surface-1: oklch(0.97 0.006 85);
-  --color-surface-2: oklch(0.94 0.008 85);
-  --color-surface-3: oklch(0.89 0.01 85);
+[data-theme="dark"] {
+  /* Warm charcoals rather than pure black, which reads as cheap on OLED
+     phones and crushes food photography. */
+  --color-surface-0: oklch(0.16 0.012 60);
+  --color-surface-1: oklch(0.21 0.014 60);
+  --color-surface-2: oklch(0.26 0.016 60);
+  --color-surface-3: oklch(0.32 0.018 60);
 
-  --color-ink: oklch(0.22 0.014 60);
-  --color-ink-muted: oklch(0.45 0.016 60);
-  --color-ink-faint: oklch(0.58 0.014 60);
+  --color-ink: oklch(0.97 0.006 80);
+  --color-ink-muted: oklch(0.76 0.014 70);
+  --color-ink-faint: oklch(0.6 0.014 70);
 
-  --color-accent: oklch(0.62 0.17 52);
-  --color-accent-strong: oklch(0.55 0.18 48);
-  --color-accent-ink: oklch(0.99 0.01 80);
+  --color-accent: oklch(0.78 0.16 62);
+  --color-accent-strong: oklch(0.72 0.18 55);
+  --color-accent-ink: oklch(0.2 0.03 60);
 
-  --color-line: oklch(0.87 0.01 70);
+  --color-success: oklch(0.75 0.15 150);
+  --color-warning: oklch(0.82 0.15 85);
+  --color-danger: oklch(0.65 0.19 25);
+  --color-info: oklch(0.72 0.12 240);
+
+  --color-line: oklch(0.32 0.014 60);
 }
 
 * {

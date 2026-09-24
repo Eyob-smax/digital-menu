@@ -297,8 +297,8 @@ export function MenuManager({
                           className={cn(
                             "flex h-9 items-center gap-1 rounded-full px-2.5 text-xs font-medium",
                             item.isAvailable
-                              ? "bg-success/15 text-success"
-                              : "bg-danger/15 text-danger",
+                              ? "bg-success/12 text-success"
+                              : "bg-danger/12 text-danger",
                           )}
                         >
                           {item.isAvailable ? (

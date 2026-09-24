@@ -24,13 +24,13 @@ export const metadata: Metadata = {
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
-    statusBarStyle: "black-translucent",
+    statusBarStyle: "default",
     title: "Menu",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#231f1c",
+  themeColor: "#fdfcfa",
   width: "device-width",
   initialScale: 1,
   // Let people zoom. Locking zoom on a menu is hostile to anyone who needs it.
