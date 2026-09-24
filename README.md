@@ -167,6 +167,15 @@ npm run db:seed      # sample data + first admin
 
 ## Notes and caveats
 
+- **Sign-in and `BETTER_AUTH_URL`.** Better Auth rejects sign-ins from any
+  origin it doesn't trust, with "Invalid origin", before it checks the
+  password. So a wrong `BETTER_AUTH_URL` looks exactly like a wrong password.
+  Local and LAN addresses (`localhost`, `192.168.x.x`, `*.local`) are trusted
+  for their own address automatically, so any port works while testing. On a
+  real deployment, set `BETTER_AUTH_URL` to the `https://` address. That's
+  the only origin allowed there, and it turns on Secure cookies.
+- **Sign-in is rate limited** to about 3 attempts per 10 seconds. After a few
+  wrong tries even the correct password is refused briefly; the form says so.
 - **Table QR codes** are rendered by `api.qrserver.com`, which means each table's
   URL is sent to that third party when the admin views the Tables page. The URLs
   aren't secret, but if you'd rather not, swap in a local QR library — the
