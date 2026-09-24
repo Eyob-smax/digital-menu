@@ -32,11 +32,14 @@ export function Button({
         size === "md" && "min-h-[44px] px-5 text-[0.95rem]",
         size === "lg" && "min-h-[52px] px-6 text-base",
         variant === "primary" &&
-          "bg-accent text-accent-ink hover:bg-accent-strong",
+          "shadow-glow bg-accent font-semibold text-accent-ink hover:bg-accent-strong",
         variant === "secondary" &&
           "bg-surface-2 text-ink hover:bg-surface-3 border border-line",
         variant === "ghost" && "text-ink-muted hover:text-ink hover:bg-surface-2",
-        variant === "danger" && "bg-danger text-white hover:opacity-90",
+        // White reads on the light theme's deep red but not on the dark
+        // theme's brighter one, so the ink flips with the theme.
+        variant === "danger" &&
+          "bg-danger text-white hover:opacity-90 dark:text-accent-ink",
         className,
       )}
       {...props}
@@ -75,7 +78,7 @@ export function Badge({
       className={cn(
         "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium",
         tone === "neutral" && "bg-surface-2 text-ink-muted",
-        tone === "accent" && "bg-accent/12 text-accent",
+        tone === "accent" && "bg-accent/12 text-accent-text",
         tone === "success" && "bg-success/12 text-success",
         tone === "warning" && "bg-warning/12 text-warning",
         tone === "danger" && "bg-danger/12 text-danger",

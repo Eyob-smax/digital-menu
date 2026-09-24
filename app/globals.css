@@ -1,48 +1,72 @@
 @import "tailwindcss";
 
 /**
- * Design language: warm, light, calm.
+ * `dark:` utilities follow the explicit data-theme attribute that the inline
+ * script in app/layout.tsx sets before first paint, rather than the OS media
+ * query — so a person's choice in the app always wins over their system.
+ */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/**
+ * Design language: bright, appetising, confident.
  *
- * A menu is read one-handed by someone who is hungry and slightly
- * distracted — often on a phone at minimum brightness in daylight. So:
- * high contrast, large type, generous touch targets, and no motion that
- * draws the eye away from the food.
+ * The palette is split by *role* rather than one colour doing every job,
+ * which is what lets it be genuinely vivid without becoming unreadable:
  *
- * Light is the default everywhere. The warm off-whites keep food
- * photography looking appetising where a stark pure white would make it
- * look clinical.
+ *   --color-accent        the vivid fill: buttons, the cart bar, active chips
+ *   --color-accent-ink    text that sits ON the vivid fill
+ *   --color-accent-text   accent-coloured text sitting on a surface (prices)
+ *
+ * A single orange cannot be both a bright fill and small readable text on
+ * white — the bright one measures under 3:1 as text. Splitting them keeps the
+ * fill loud and every piece of text above WCAG AA (4.5:1). Every value below
+ * was measured against the surfaces it actually sits on.
  */
 
 @theme {
-  /* Surfaces — warm off-whites, never pure #fff. */
-  --color-surface-0: oklch(0.99 0.004 85);
-  --color-surface-1: oklch(0.97 0.006 85);
-  --color-surface-2: oklch(0.94 0.008 85);
-  --color-surface-3: oklch(0.89 0.01 85);
+  /* ---------------------------------------------------------- surfaces */
+  --color-surface-0: oklch(0.995 0.003 80);
+  --color-surface-1: oklch(0.975 0.006 75);
+  --color-surface-2: oklch(0.945 0.009 72);
+  --color-surface-3: oklch(0.9 0.013 70);
 
-  /* Text — all four pass WCAG AA on surface-0. */
-  --color-ink: oklch(0.22 0.014 60);
-  --color-ink-muted: oklch(0.45 0.016 60);
-  --color-ink-faint: oklch(0.52 0.014 60);
+  /* -------------------------------------------------------------- text */
+  --color-ink: oklch(0.21 0.02 50);
+  --color-ink-muted: oklch(0.45 0.02 50);
+  --color-ink-faint: oklch(0.53 0.018 50);
 
-  /* Accent: warm amber, the colour of a kitchen pass light.
-     L=0.50 is measured, not eyeballed. The accent carries prices — small
-     text needing 4.5:1 — backs white-on-accent buttons, AND tints its own
-     badge background. That last case is the binding constraint: a colour
-     on a tint of itself. The dark theme's L=0.78 lands near 2:1 here. */
-  --color-accent: oklch(0.5 0.17 52);
-  --color-accent-strong: oklch(0.44 0.18 48);
-  --color-accent-ink: oklch(0.99 0.01 80);
+  /* ------------------------------------------------------------- brand */
+  /* Vivid tangerine, the colour of appetite: #f86205. L=0.68 rather than a
+     slightly brighter 0.70 so a selected chip still clears the 3:1
+     UI-boundary rule against white, where colour alone shows state. */
+  --color-accent: oklch(0.68 0.2 43);
+  --color-accent-strong: oklch(0.62 0.21 38);
+  --color-accent-ink: oklch(0.18 0.03 45);
+  --color-accent-text: oklch(0.52 0.17 40);
 
-  /* Status colours, darkened to the same rule so every badge clears AA. */
-  --color-success: oklch(0.48 0.13 150);
-  --color-warning: oklch(0.5 0.12 70);
-  --color-danger: oklch(0.5 0.19 25);
-  --color-info: oklch(0.5 0.13 250);
+  /* Second brand colour for gradients and highlights: hot pink. */
+  --color-berry: oklch(0.63 0.25 355);
 
-  --color-line: oklch(0.87 0.01 70);
+  /* ------------------------------------------------------------ status */
+  --color-success: oklch(0.47 0.15 150);
+  --color-warning: oklch(0.5 0.13 65);
+  --color-danger: oklch(0.52 0.21 25);
+  --color-info: oklch(0.52 0.2 265);
 
-  --radius-card: 1.125rem;
+  --color-line: oklch(0.9 0.01 70);
+
+  /* ------------------------------------------------ category highlights */
+  /* Bright hues for per-category colour coding. Used as tinted chip
+     backgrounds with dark ink, so they can be fully saturated. */
+  --color-hue-1: oklch(0.68 0.2 43);
+  --color-hue-2: oklch(0.63 0.25 355);
+  --color-hue-3: oklch(0.64 0.2 295);
+  --color-hue-4: oklch(0.62 0.16 215);
+  --color-hue-5: oklch(0.66 0.19 145);
+  --color-hue-6: oklch(0.72 0.17 85);
+
+  /* ------------------------------------------------------------ shape */
+  --radius-card: 1.25rem;
   --radius-pill: 999px;
 
   --font-display: var(--font-display), ui-serif, Georgia, serif;
@@ -52,31 +76,47 @@
 }
 
 /**
- * Dark theme, opt-in via data-theme="dark". Kept for a dimly lit dining
- * room, but nothing selects it by default.
+ * Dark theme. Bright colours read *better* on dark surfaces, so here the
+ * accent text can be light and luminous rather than darkened for contrast.
+ * Surfaces are warm charcoals, not pure black, which crushes food
+ * photography and looks cheap on OLED.
  */
 [data-theme="dark"] {
-  /* Warm charcoals rather than pure black, which reads as cheap on OLED
-     phones and crushes food photography. */
-  --color-surface-0: oklch(0.16 0.012 60);
-  --color-surface-1: oklch(0.21 0.014 60);
-  --color-surface-2: oklch(0.26 0.016 60);
-  --color-surface-3: oklch(0.32 0.018 60);
+  color-scheme: dark;
+
+  --color-surface-0: oklch(0.165 0.014 55);
+  --color-surface-1: oklch(0.215 0.016 55);
+  --color-surface-2: oklch(0.27 0.018 55);
+  --color-surface-3: oklch(0.335 0.02 55);
 
   --color-ink: oklch(0.97 0.006 80);
-  --color-ink-muted: oklch(0.76 0.014 70);
-  --color-ink-faint: oklch(0.6 0.014 70);
+  --color-ink-muted: oklch(0.78 0.014 70);
+  --color-ink-faint: oklch(0.66 0.014 70);
 
-  --color-accent: oklch(0.78 0.16 62);
-  --color-accent-strong: oklch(0.72 0.18 55);
-  --color-accent-ink: oklch(0.2 0.03 60);
+  --color-accent: oklch(0.74 0.19 50);
+  --color-accent-strong: oklch(0.8 0.17 55);
+  --color-accent-ink: oklch(0.18 0.03 45);
+  --color-accent-text: oklch(0.8 0.15 55);
 
-  --color-success: oklch(0.75 0.15 150);
-  --color-warning: oklch(0.82 0.15 85);
-  --color-danger: oklch(0.65 0.19 25);
-  --color-info: oklch(0.72 0.12 240);
+  --color-berry: oklch(0.72 0.21 355);
 
-  --color-line: oklch(0.32 0.014 60);
+  --color-success: oklch(0.78 0.16 150);
+  --color-warning: oklch(0.84 0.15 85);
+  --color-danger: oklch(0.72 0.18 25);
+  --color-info: oklch(0.76 0.14 255);
+
+  --color-line: oklch(0.33 0.016 55);
+
+  --color-hue-1: oklch(0.74 0.19 50);
+  --color-hue-2: oklch(0.72 0.21 355);
+  --color-hue-3: oklch(0.72 0.19 295);
+  --color-hue-4: oklch(0.76 0.13 215);
+  --color-hue-5: oklch(0.78 0.17 145);
+  --color-hue-6: oklch(0.84 0.15 85);
+}
+
+:root {
+  color-scheme: light;
 }
 
 * {
@@ -108,7 +148,7 @@ a {
 
 /* Visible focus for keyboard users, invisible for pointer users. */
 :focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-accent-text);
   outline-offset: 2px;
   border-radius: 6px;
 }
@@ -120,6 +160,48 @@ a {
 }
 .no-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+/* ------------------------------------------------------------ brand */
+
+/**
+ * The brand gradient: tangerine into hot pink. Text on it uses
+ * accent-ink, which is measured against BOTH ends of the gradient, so it
+ * stays readable wherever a word happens to land.
+ */
+.bg-brand {
+  background-image: linear-gradient(
+    135deg,
+    var(--color-accent) 0%,
+    color-mix(in oklch, var(--color-accent), var(--color-berry)) 55%,
+    var(--color-berry) 100%
+  );
+}
+
+
+/* Soft lift for cards on the light theme. On dark surfaces a shadow is
+   invisible, so the border carries the edge there instead. */
+.shadow-card {
+  box-shadow:
+    0 1px 2px rgb(40 20 0 / 0.04),
+    0 8px 24px -12px rgb(40 20 0 / 0.14);
+}
+[data-theme="dark"] .shadow-card {
+  box-shadow: none;
+}
+
+/* Coloured glow under primary actions, so the main button reads as the
+   main button at a glance. */
+.shadow-glow {
+  box-shadow: 0 8px 24px -8px color-mix(in oklch, var(--color-accent) 65%, transparent);
+}
+
+/* Featured dishes get a gradient ring rather than just a badge. */
+.ring-brand {
+  border: 2px solid transparent;
+  background:
+    linear-gradient(var(--color-surface-1), var(--color-surface-1)) padding-box,
+    linear-gradient(135deg, var(--color-accent), var(--color-berry)) border-box;
 }
 
 /* ---------------------------------------------------------------- motion */
